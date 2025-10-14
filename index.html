@@ -61,6 +61,11 @@
             background-color: rgba(40, 40, 30, 0.6);
             backdrop-filter: blur(5px);
         }
+        .modal-content {
+            transform: scale(0.95);
+            opacity: 0;
+            transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+        }
         .btn-primary {
              background-color: #BDA672; /* Riesling gold */
              color: white;
@@ -91,9 +96,8 @@
 </head>
 <body class="flex items-center justify-center min-h-screen p-2 md:p-4">
 
-    <!-- Main Menu -->
     <div id="main-menu-container" class="w-full max-w-2xl mx-auto">
-         <div class="bg-white rounded-2xl shadow-2xl p-8 w-full text-center transform transition-all">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full text-center transform transition-all">
             <h2 class="text-4xl font-bold mb-4 theme-text">German Wine Regions Challenge</h2>
             <p class="text-lg mb-6 text-gray-700">Test your knowledge of Germany's wine geography.</p>
             
@@ -111,7 +115,6 @@
         </div>
     </div>
     
-    <!-- Database View -->
     <div id="database-container" class="w-full max-w-6xl mx-auto hidden">
         <div class="bg-white rounded-2xl shadow-2xl p-8 w-full">
             <div class="flex justify-between items-center mb-6">
@@ -135,7 +138,6 @@
         </div>
     </div>
 
-    <!-- Game Container -->
     <div id="game-container" class="w-full max-w-4xl mx-auto hidden relative pb-16">
         <button id="back-to-menu-game-btn" class="absolute bottom-0 right-0 mb-2 mr-2 md:mb-0 md:mr-0 btn-secondary font-bold py-2 px-4 rounded-lg transition-colors z-10 text-xs md:text-base">Main Menu</button>
         <div class="text-center mb-6">
@@ -167,48 +169,44 @@
         </div>
     </div>
 
-    <!-- Round Over Modal -->
     <div id="round-over-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full text-center transform transition-all scale-95 opacity-0">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full text-center modal-content">
              <h2 id="feedback-message" class="text-4xl font-bold mb-4 theme-text"></h2>
              <div class="mb-6 text-left max-h-60 overflow-y-auto" id="success-info">
-                <!-- Dynamic data will be injected here -->
-            </div>
+                 </div>
             <button id="next-round-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors">Continue</button>
         </div>
     </div>
 
-    <!-- Rules Modal -->
     <div id="rules-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full text-left transform transition-all scale-95 opacity-0">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full text-left modal-content">
              <h2 class="text-3xl font-bold mb-4 theme-text">Game Modes & Rules</h2>
              <div class="space-y-4 text-gray-700">
-                <div>
-                    <h3 class="font-bold">Bereiche Study:</h3>
-                    <p class="text-sm">Match the <span class="font-semibold">Bereiche</span> (District) to its correct <span class="font-semibold">Anbaugebiet</span> (Region).</p>
-                </div>
-                <div>
-                    <h3 class="font-bold">Grosslagen Challenge:</h3>
-                    <p class="text-sm">Match the <span class="font-semibold">Grosslage</span> (Collective Vineyard Site) to its correct <span class="font-semibold">Bereiche</span> (District).</p>
-                </div>
-                <div>
-                    <h3 class="font-bold">Major Villages Challenge:</h3>
-                    <p class="text-sm">Match the <span class="font-semibold">Major Village</span> to its correct <span class="font-semibold">Bereiche</span> (District).</p>
-                </div>
-                <div>
-                    <h3 class="font-bold">Moguls Challenge:</h3>
-                    <p class="text-sm">Match the <span class="font-semibold">Mogul</span> (Top Producer) to their home <span class="font-semibold">Village</span>.</p>
-                </div>
-                <hr>
-                <p class="text-sm">All modes consist of 10 rounds, with 5 matches per round. You get +2 points for a correct match on your first try, +1 for a correct match on subsequent tries, and -1 for an incorrect guess.</p>
+                 <div>
+                     <h3 class="font-bold">Bereiche Study:</h3>
+                     <p class="text-sm">Match the <span class="font-semibold">Bereiche</span> (District) to its correct <span class="font-semibold">Anbaugebiet</span> (Region).</p>
+                 </div>
+                 <div>
+                     <h3 class="font-bold">Grosslagen Challenge:</h3>
+                     <p class="text-sm">Match the <span class="font-semibold">Grosslage</span> (Collective Vineyard Site) to its correct <span class="font-semibold">Bereiche</span> (District).</p>
+                 </div>
+                 <div>
+                     <h3 class="font-bold">Major Villages Challenge:</h3>
+                     <p class="text-sm">Match the <span class="font-semibold">Major Village</span> to its correct <span class="font-semibold">Bereiche</span> (District).</p>
+                 </div>
+                 <div>
+                     <h3 class="font-bold">Moguls Challenge:</h3>
+                     <p class="text-sm">Match the <span class="font-semibold">Mogul</span> (Top Producer) to their home <span class="font-semibold">Village</span>.</p>
+                 </div>
+                 <hr>
+                 <p class="text-sm">All modes consist of 10 rounds, with 5 matches per round. You get +2 points for a correct match on your first try, +1 for a correct match on subsequent tries, and -1 for an incorrect guess.</p>
              </div>
             <button id="close-rules-btn" class="w-full btn-secondary font-bold py-3 px-4 rounded-lg transition-colors mt-6">Close</button>
         </div>
     </div>
     
-    <!-- Game Over Modal -->
     <div id="game-over-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center transform transition-all scale-95 opacity-0">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center modal-content">
             <h2 class="text-4xl font-bold mb-4 theme-text">Game Over!</h2>
             <p id="final-feedback" class="text-xl mb-4"></p>
             <div class="theme-bg-light p-4 rounded-lg mb-6">
@@ -243,55 +241,55 @@
                     "bereiche": ["Mainviereck", "Maindreieck", "Steigerwald"],
                     "grosslagen": { "Mainviereck": ["Heiligenthal", "Reuschberg"], "Maindreieck": ["Burg", "Engelsberg", "Ewig Leben", "Hofrat", "Honigberg", "Kirchberg", "Marienberg", "Markgraf Babenberg", "Ölspiel", "Ravensburg", "Rosstal", "Teufelstor"], "Steigerwald": ["Schild", "Zabelstein", "Schlossstück", "Herrenberg", "Burgberg", "Schlossberg", "Steige", "Burgweg", "Kapellenberg"] },
                     "major_villages": [{ "bereiche": "Mainviereck", "villages": ["Bürgstadt", "Miltenberg", "Marktheidenfeld", "Erlenbach"] }, { "bereiche": "Maindreieck", "villages": ["Karlstadt", "Thüngersheim", "Würzburg", "Randersacker", "Sommerhausen", "Frickenhausen", "Escherndorf", "Volkach", "Nordheim", "Fahr"] }, { "bereiche": "Steigerwald", "villages": ["Rödelsee", "Iphofen", "Castell", "Wiesenbronn"] }],
-                    "mogul": [{ "name": "Rudolf Fürst", "village": "Burgstadt" }, { "name": "Horst Sauer", "village": "Escherndorf" }, { "name": "Hans Wirsching", "village": "Iphofen" }, { "name": "Juliusspital Würzburg", "village": "Würzburg" }, { "name": "Castell'sches Domänenamt", "village": "Castell" }]
+                    "mogul": [{ "name": "Rudolf Fürst", "village": "Bürgstadt" }, { "name": "Horst Sauer", "village": "Escherndorf" }, { "name": "Hans Wirsching", "village": "Iphofen" }, { "name": "Juliusspital Würzburg", "village": "Würzburg" }, { "name": "Castell'sches Domänenamt", "village": "Castell" }]
                 },
                 {
                     "anbaugebiet": "Hessische-Bergstrasse",
                     "bereiche": ["Starkenburg", "Umstadt"],
                     "grosslagen": { "Starkenburg": ["Rott", "Wolfsmagen", "Schlossberg"], "Umstadt": [] },
-                    "major_villages": [{ "bereiche": "Starkenburg (north to south)", "villages": ["Zwingenberg", "Auerbach", "Bensheim", "Heppenheim"] }],
+                    "major_villages": [{ "bereiche": "Starkenburg", "villages": ["Zwingenberg", "Auerbach", "Bensheim", "Heppenheim"] }],
                     "mogul": [{ "name": "Hessische Staatsweingüter Domaine Bergstrasse", "village": "Bensheim" }, { "name": "Simon-Bürkle", "village": "Zwingenberg" }]
                 },
                 {
                     "anbaugebiet": "Mittlerhein",
                     "bereiche": ["Loreley", "Siebengebirge"],
                     "grosslagen": { "Loreley": ["Burg Hammerstein", "Marksburg", "Gedeonseck", "Schloss Schönburg", "Herrenberg", "Schloss Stahleck", "Loreleyfelsen", "Schloss Reichenstein", "Lahntal", "Burg Rheinfels"], "Siebengebirge": ["Petersberg"] },
-                    "major_villages": [{ "bereiche": "North of Koblenz (north to south)", "villages": ["Bad Hönningen", "Hammerstein", "Leubsdorf"] }, { "bereiche": "South of Koblenz (north to south)", "villages": ["Spay", "Osterspai", "Boppard", "Oberwesel", "Engehöll", "Dörscheid", "Dellhofen", "Bacharach", "Steeg"] }],
+                    "major_villages": [{ "bereiche": "Loreley", "villages": ["Bad Hönningen", "Hammerstein", "Leubsdorf", "Spay", "Osterspai", "Boppard", "Oberwesel", "Engehöll", "Dörscheid", "Dellhofen", "Bacharach", "Steeg"] }],
                     "mogul": [{ "name": "Matthias Müller", "village": "Spay" }, { "name": "Ratzenberger", "village": "Bacharach" }, { "name": "Toni Jost-Hahnenhof", "village": "Bacharach" }, { "name": "Frederich Bastian", "village": "Bacharach" }, { "name": "Lanius Knab", "village": "Oberwesel" }]
                 },
                 {
                     "anbaugebiet": "Mosel",
                     "bereiche": ["Burg Cochem", "Bernkastel", "Ruwertal", "Saar", "Moseltor", "Obermosel"],
                     "grosslagen": { "Burg Cochem": ["Weinhex", "Goldbäumchen", "Grafschaft", "Rosenhang", "Schwarze Katz"], "Bernkastel": ["Vom heissen Stein", "Schwarzlay", "Nacktarsch", "Münzlay", "Kurfürstenlay", "Michelsberg", "St. Michael", "Badstube", "Propstberg", "Römerlay"], "Ruwertal": ["Grosslagenfrei", "Römerlay"], "Saar": ["Scharzberg"], "Moseltor": ["Schloss Bübingen"], "Obermosel": ["Gipfel", "Königsberg"] },
-                    "major_villages": [{ "bereiche": "Burg Cochem (north to south)", "villages": ["Winningen", "Kobern-Gondorf", "Hatzenport", "Cochem", "Bremm", "Zell"] }, { "bereiche": "Bernkastel (north to south)", "villages": ["Pünderich", "Enkirch", "Traben-Trarbach", "Wolf", "Kröv", "Lösnich", "Erden", "Ürzig", "Zeltingen", "Wehlen", "Graach an der Mosel", "Bernkastel-Kues", "Lieser", "Brauneberg", "Kesten", "Wintrich", "Piesport", "Dhron", "Neumagen", "Trittenheim", "Leiwen"] }, { "bereiche": "Ruwertal", "villages": ["Ruwer", "Eitelsbach", "Mertesdorf", "Kasel", "Waldrach", "Avelsbach"] }, { "bereiche": "Saar", "villages": ["Serrig", "Saarburg", "Wiltingen", "Ockfen", "Oberemmel", "Kanzem"] }],
-                    "mogul": [{ "name": "Fritz Haag", "village": "Brauneberg" }, { "name": "Dr. Loosen", "village": "Bernkastel" }, { "name": "Egon Müller", "village": "Wiltingen" }, { "name": "Joh. Jos. Prüm", "village": "Wehlen" }, { "name": "Karthäuserhof", "village": "Eitelsbach" }]
+                    "major_villages": [{ "bereiche": "Burg Cochem", "villages": ["Winningen", "Kobern-Gondorf", "Hatzenport", "Cochem", "Bremm", "Zell"] }, { "bereiche": "Bernkastel", "villages": ["Pünderich", "Enkirch", "Traben-Trarbach", "Wolf", "Kröv", "Lösnich", "Erden", "Ürzig", "Zeltingen", "Wehlen", "Graach an der Mosel", "Bernkastel-Kues", "Lieser", "Brauneberg", "Kesten", "Wintrich", "Piesport", "Dhron", "Neumagen", "Trittenheim", "Leiwen"] }, { "bereiche": "Ruwertal", "villages": ["Ruwer", "Eitelsbach", "Mertesdorf", "Kasel", "Waldrach", "Avelsbach"] }, { "bereiche": "Saar", "villages": ["Serrig", "Saarburg", "Wiltingen", "Ockfen", "Oberemmel", "Kanzem"] }],
+                    "mogul": [{ "name": "Fritz Haag", "village": "Brauneberg" }, { "name": "Dr. Loosen", "village": "Bernkastel-Kues" }, { "name": "Egon Müller", "village": "Wiltingen" }, { "name": "Joh. Jos. Prüm", "village": "Wehlen" }, { "name": "Karthäuserhof", "village": "Eitelsbach" }]
                 },
                 {
                     "anbaugebiet": "Nahe",
                     "bereiche": ["Nahetal"],
                     "grosslagen": { "Nahetal": ["Schlosskapelle", "Pfarrgarten", "Kronenberg", "Burgweg", "Paradiesgarten", "Rosengarten", "Sonnenborn"] },
-                    "major_villages": [{ "bereiche": "Nahetal (north to southwest)", "villages": ["Münster-Sarmsheim", "Burg Layen", "Dorsheim", "Laubenheim", "Windesheim", "Langenlonsheim", "Wallhausen", "Bad Kreuznach", "Bad Münster am Stein", "Traisen", "Norheim", "Niederhausen", "Oberhausen", "Schlossböckelheim", "Bockenau"] }],
+                    "major_villages": [{ "bereiche": "Nahetal", "villages": ["Münster-Sarmsheim", "Burg Layen", "Dorsheim", "Laubenheim", "Windesheim", "Langenlonsheim", "Wallhausen", "Bad Kreuznach", "Bad Münster am Stein", "Traisen", "Norheim", "Niederhausen", "Oberhausen", "Schlossböckelheim", "Bockenau", "Monzingen"] }],
                     "mogul": [{ "name": "Hermann Dönnhoff", "village": "Oberhausen" }, { "name": "Emrich-Schönleber", "village": "Monzingen" }, { "name": "Schlossgut Diel", "village": "Burg Layen" }, { "name": "Schäfer-Fröhlich", "village": "Bockenau" }, { "name": "Dr. Crusius", "village": "Traisen" }]
                 },
                 {
                     "anbaugebiet": "Pfalz",
                     "bereiche": ["Mittelhaardt-Deutsche Weinstrasse", "Südliche Weinstrasse"],
                     "grosslagen": { "Mittelhaardt-Deutsche Weinstrasse": ["Höllenpfad", "Schwarzerde", "Feuerberg", "Grafenstück", "Kobnert", "Hofstück", "Mariengarten", "Pfaffengrund", "Rebstöckel", "Hochmess", "Schenkenböhl", "Rosenböhl", "Meerspinne", "Honigsäckel"], "Südliche Weinstrasse": ["Bischofskreuz", "Königsgarten", "Mandelhöhe", "Trappenberg", "Kloster Liebfrauenberg", "Guttenberg", "Schloss Ludwigshöhle", "Ordensgut", "Herrlich"] },
-                    "major_villages": [{ "bereiche": "Mittelhaardt-Deutsche Weinstrasse (north to south)", "villages": ["Dirmstein", "Grünstadt", "Laumersheim", "Grosskarlbach", "Kirchheim", "Weisenheim", "Kallstadt", "Ungstein", "Bad Dürkheim", "Wachenheim", "Forst", "Deidesheim", "Ruppertsberg", "Gimmeldingen", "Mussbach", "Haardt", "Neustadt", "Duttweiler"] }, { "bereiche": "Südliche Weinstrasse (north to south)", "villages": ["Hainfeld", "Burrweiler", "Gleisweiler", "Essingen", "Siebeldingen", "Birkweiler", "Klingenmünster", "Schweigen"] }],
+                    "major_villages": [{ "bereiche": "Mittelhaardt-Deutsche Weinstrasse", "villages": ["Dirmstein", "Grünstadt", "Laumersheim", "Grosskarlbach", "Kirchheim", "Weisenheim", "Kallstadt", "Ungstein", "Bad Dürkheim", "Wachenheim", "Forst", "Deidesheim", "Ruppertsberg", "Gimmeldingen", "Mussbach", "Haardt", "Neustadt", "Duttweiler"] }, { "bereiche": "Südliche Weinstrasse", "villages": ["Hainfeld", "Burrweiler", "Gleisweiler", "Essingen", "Siebeldingen", "Birkweiler", "Klingenmünster", "Schweigen"] }],
                     "mogul": [{ "name": "Knipser", "village": "Laumersheim" }, { "name": "Ökonomierat Rebholz", "village": "Siebeldingen" }, { "name": "Bassermann-Jordan", "village": "Deidesheim" }, { "name": "Von Winning", "village": "Deidesheim" }, { "name": "Friedrich Becker", "village": "Schweigen" }, { "name": "Dr. Bürklin-Wolf", "village": "Wachenheim" }, { "name": "A. Christmann", "village": "Gimmeldingen" }, { "name": "Koehler-Ruprecht", "village": "Kallstadt" }, { "name": "Philipp Kuhn", "village": "Laumersheim" }, { "name": "Georg Mosbacher", "village": "Forst" }, { "name": "Pfeffingen - Fuhrmann-Eymael", "village": "Bad Dürkheim" }, { "name": "Dr. Wehrheim", "village": "Birkweiler" }]
                 },
                 {
                     "anbaugebiet": "Rheingau",
                     "bereiche": ["Johannisberg"],
                     "grosslagen": { "Johannisberg": ["Burgweg", "Daubhaus", "Deutelsberg", "Erntebringer", "Gottesthal", "Heiligenstock", "Honigberg", "Mehrhölzchen", "Steil", "Steinmächer"] },
-                    "major_villages": [{ "bereiche": "Johannisberg (west to east)", "villages": ["Lorch", "Assmannshausen", "Rüdesheim", "Geisenheim", "Johannisberg", "Winkel", "Oestrich", "Hallgarten", "Hattenheim", "Erbach", "Kiedrich", "Eltville", "Rauenthal", "Martinsthal", "Walluf", "Hochheim", "Wicker"] }],
+                    "major_villages": [{ "bereiche": "Johannisberg", "villages": ["Lorch", "Assmannshausen", "Rüdesheim", "Geisenheim", "Johannisberg", "Winkel", "Oestrich", "Hallgarten", "Hattenheim", "Erbach", "Kiedrich", "Eltville", "Rauenthal", "Martinsthal", "Walluf", "Hochheim", "Wicker"] }],
                     "mogul": [{ "name": "Robert Weil", "village": "Kiedrich" }, { "name": "Georg Breuer", "village": "Rüdesheim" }, { "name": "Schloss Johannisberg", "village": "Geisenheim" }, { "name": "August Kesseler", "village": "Assmannshausen" }, { "name": "Franz Künstler", "village": "Hochheim" }, { "name": "Josef Leitz", "village": "Rüdesheim" }, { "name": "Schloss Schönborn", "village": "Hattenheim" }, { "name": "Josef Spreitzer", "village": "Oestrich" }]
                 },
                 {
                     "anbaugebiet": "Rheinhessen",
                     "bereiche": ["Nierstein", "Bingen", "Wonnegau"],
                     "grosslagen": { "Nierstein": ["Auflangen", "Domherr", "Güldenmorgen", "Gutes Domtal", "Krötenbrunnen", "Petersberg", "Rehbach", "Rheinblick", "Sankt Alban", "Spiegelberg", "Vögelsgärten"], "Bingen": ["Adelberg", "Kaiserpfalz", "Kurfürstensück", "Rheingrafenstein", "Sankt Rochuskapelle", "Abtey"], "Wonnegau": ["Bergkloster", "Burg Rodenstein", "Domblick", "Gotteshilfe", "Liebfrauenmorgen", "Pilgerpfad", "Sybillenstein"] },
-                    "major_villages": [{ "bereiche": "Nierstein/Rheinterrasse (north to south)", "villages": ["Bodenheim", "Nackenheim", "Nierstein", "Oppenheim", "Dienheim"] }, { "bereiche": "Bingen", "villages": ["Siefersheim", "Bingen", "Appenheim"] }, { "bereiche": "Wonnegau", "villages": ["Westhofen", "Flörsheim-Dalsheim", "Dittelsheim", "Monsheim", "Worms"] }],
+                    "major_villages": [{ "bereiche": "Nierstein", "villages": ["Bodenheim", "Nackenheim", "Nierstein", "Oppenheim", "Dienheim"] }, { "bereiche": "Bingen", "villages": ["Siefersheim", "Bingen", "Appenheim"] }, { "bereiche": "Wonnegau", "villages": ["Westhofen", "Flörsheim-Dalsheim", "Dittelsheim", "Monsheim", "Worms"] }],
                     "mogul": [{ "name": "Keller", "village": "Flörsheim-Dalsheim" }, { "name": "Kühling-Gillot", "village": "Bodenheim" }, { "name": "Wagner-Stempel", "village": "Siefersheim" }, { "name": "Wittman", "village": "Westhofen" }, { "name": "Gunderloch", "village": "Nackenheim" }]
                 },
                 {
@@ -305,14 +303,14 @@
                     "anbaugebiet": "Sachsen",
                     "bereiche": ["Meissen", "Elstertal"],
                     "grosslagen": { "Meissen": ["Spaargebirge", "Schlossweinberg", "Elbhänge", "Lössnitz"], "Elstertal": [] },
-                    "major_villages": [{ "bereiche": "Meissen", "villages": ["Seusslitz", "Proschwitz", "Meissen", "Pillnitz", "Radebeul"] }],
+                    "major_villages": [{ "bereiche": "Meissen", "villages": ["Seusslitz", "Proschwitz", "Meissen", "Pillnitz", "Radebeul", "Dresden-Pillnitz"] }],
                     "mogul": [{ "name": "Schloss Proschwitz", "village": "Meissen" }, { "name": "Klaus Zimmerling", "village": "Dresden-Pillnitz" }]
                 },
                 {
                     "anbaugebiet": "Württemberg",
                     "bereiche": ["Remstal-Stuttgart", "Württembergisch Unterland", "Württembergisch Bodensee", "Bayerischer Bodensee", "Kocher-Jagst-Tauber", "Oberer Neckar"],
                     "grosslagen": { "Remstal-Stuttgart": ["Hohenneuffen", "Kopf", "Sonnenbühl", "Wartbühl", "Weinsteige"], "Württembergisch Unterland": ["Heuchelberg", "Kirchenweinberg", "Lindelberg", "Salzberg", "Schalkstein", "Schozachtal", "Staufenberg", "Stromberg", "Wunnenstein"], "Württembergisch Bodensee": [], "Bayerischer Bodensee": ["Seegarten"], "Kocher-Jagst-Tauber": ["Kocherberg"], "Oberer Neckar": [] },
-                    "major_villages": [{ "bereiche": "Remstal-Stuttgart", "villages": ["Stetten", "Schnait", "Fellbach", "Untertürkheim", "Winterbach"] }, { "bereiche": "Württembergisch Unterland", "villages": ["Stetten", "Schozach", "Neipperg", "Schwaigern", "Kleinbottwar", "Hohenbeilstein", "Neckarsulm", "Heilbronn", "Gundelsheim", "Besigheim", "Mundelsheim", "Bönnigheim", "Verrenberg", "Maulbronn", "Weinsberg"] }],
+                    "major_villages": [{ "bereiche": "Remstal-Stuttgart", "villages": ["Stetten", "Schnait", "Fellbach", "Untertürkheim", "Winterbach", "Kernen"] }, { "bereiche": "Württembergisch Unterland", "villages": ["Stetten", "Schozach", "Neipperg", "Schwaigern", "Kleinbottwar", "Hohenbeilstein", "Neckarsulm", "Heilbronn", "Gundelsheim", "Besigheim", "Mundelsheim", "Bönnigheim", "Verrenberg", "Maulbronn", "Weinsberg"] }],
                     "mogul": [{ "name": "Gerhard Aldinger", "village": "Fellbach" }, { "name": "Rainer Schnaitmann", "village": "Fellbach" }, { "name": "Karl Haidle", "village": "Kernen" }]
                 }
             ]
@@ -356,9 +354,44 @@
             else mainMenuContainer.classList.remove('hidden');
         }
 
+        function showModal(modal) {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.firstElementChild.classList.remove('scale-95', 'opacity-0');
+                modal.firstElementChild.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function hideModal(modal, callback) {
+            modal.firstElementChild.classList.remove('scale-100', 'opacity-100');
+            modal.firstElementChild.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                if (callback) callback();
+            }, 200);
+        }
+
         function populateDatabase() {
-            // This function needs to be created to show a browsable database of all items.
-            alert("Database view is not yet implemented in this version.");
+            const tableBody = document.getElementById('database-table-body');
+            tableBody.innerHTML = ''; // Clear existing data
+
+            gameData.german_wine_regions.forEach(region => {
+                const row = document.createElement('tr');
+                row.className = 'border-b theme-border-light';
+
+                const formatArray = (arr) => arr ? arr.join('<br>') : 'N/A';
+                const formatObject = (obj) => Object.entries(obj).map(([key, value]) => `<b>${key}:</b><br>${value.join('<br>') || 'N/A'}`).join('<hr class="my-2">');
+                const formatNestedArray = (arr, key1, key2) => arr.map(item => `<b>${item[key1]}:</b><br>${Array.isArray(item[key2]) ? item[key2].join('<br>') : item[key2]}`).join('<hr class="my-2">');
+
+                row.innerHTML = `
+                    <td class="p-4 align-top">${region.anbaugebiet}</td>
+                    <td class="p-4 align-top">${formatArray(region.bereiche)}</td>
+                    <td class="p-4 align-top">${formatObject(region.grosslagen)}</td>
+                    <td class="p-4 align-top">${formatNestedArray(region.major_villages, 'bereiche', 'villages')}</td>
+                    <td class="p-4 align-top">${formatNestedArray(region.mogul, 'name', 'village')}</td>
+                `;
+                tableBody.appendChild(row);
+            });
         }
 
         function shuffleArray(array) {
@@ -375,6 +408,7 @@
             totalScore = 0;
             currentRound = 1;
             document.getElementById('game-title').textContent = getGameTitle(mode);
+            showScreen('game');
             startRound();
         }
 
@@ -405,15 +439,65 @@
         }
         
         function generateRoundData() {
-            // Complex logic to generate 5 unique pairs for the current mode
+            const allPairs = [];
+            const regions = gameData.german_wine_regions;
+
+            if (currentGameMode === 'bereiche') {
+                regions.forEach(region => {
+                    region.bereiche.forEach(bereich => allPairs.push({ left: bereich, right: region.anbaugebiet }));
+                });
+                leftColumnTitle.textContent = 'Bereiche';
+                rightColumnTitle.textContent = 'Anbaugebiet';
+            } else if (currentGameMode === 'grosslage') {
+                regions.forEach(region => {
+                    for (const bereich in region.grosslagen) {
+                        region.grosslagen[bereich].forEach(grosslage => allPairs.push({ left: grosslage, right: bereich }));
+                    }
+                });
+                leftColumnTitle.textContent = 'Grosslage';
+                rightColumnTitle.textContent = 'Bereiche';
+            } else if (currentGameMode === 'villages') {
+                regions.forEach(region => {
+                    region.major_villages.forEach(item => {
+                        item.villages.forEach(village => allPairs.push({ left: village, right: item.bereiche }));
+                    });
+                });
+                leftColumnTitle.textContent = 'Major Village';
+                rightColumnTitle.textContent = 'Bereiche';
+            } else if (currentGameMode === 'moguls') {
+                regions.forEach(region => {
+                    region.mogul.forEach(producer => allPairs.push({ left: producer.name, right: producer.village }));
+                });
+                leftColumnTitle.textContent = 'Mogul';
+                rightColumnTitle.textContent = 'Village';
+            }
+
+            shuffleArray(allPairs);
+            roundData = allPairs.slice(0, 5);
         }
         
         function renderButtons() {
-            // Renders buttons based on roundData and currentGameMode
+            leftColumnContainer.innerHTML = '';
+            rightColumnContainer.innerHTML = '';
+
+            const leftItems = shuffleArray(roundData.map(item => item.left));
+            const rightItems = shuffleArray(roundData.map(item => item.right));
+
+            const createButton = (item, type, container) => {
+                const button = document.createElement('button');
+                button.className = 'btn-choice p-2 rounded-lg text-sm md:text-base';
+                button.textContent = item;
+                button.dataset.value = item;
+                button.addEventListener('click', () => handleSelection(type, button));
+                container.appendChild(button);
+            };
+
+            leftItems.forEach(item => createButton(item, 'left', leftColumnContainer));
+            rightItems.forEach(item => createButton(item, 'right', rightColumnContainer));
         }
         
         function handleSelection(type, button) {
-             if (button.classList.contains('correct')) return;
+             if (button.classList.contains('correct') || button.disabled) return;
 
              if (type === 'left') {
                  if (selectedLeftItem) selectedLeftItem.classList.remove('selected');
@@ -431,17 +515,70 @@
         }
 
         function checkMatch() {
-            // Complex logic to check match based on currentGameMode
+            const leftValue = selectedLeftItem.dataset.value;
+            const rightValue = selectedRightItem.dataset.value;
+            const correctPair = roundData.find(item => item.left === leftValue);
+            const isCorrect = correctPair && correctPair.right === rightValue;
+            
+            const tempLeft = selectedLeftItem;
+            const tempRight = selectedRightItem;
+            selectedLeftItem = null;
+            selectedRightItem = null;
+
+            if (isCorrect) {
+                tempLeft.classList.remove('selected');
+                tempRight.classList.remove('selected');
+                tempLeft.classList.add('correct');
+                tempRight.classList.add('correct');
+                tempLeft.disabled = true;
+                tempRight.disabled = true;
+
+                score += roundAttempts[leftValue] ? 1 : 2;
+                roundAttempts[leftValue] = true;
+
+                correctMatches++;
+                updateScoreboard();
+
+                if (correctMatches === 5) {
+                    setTimeout(showRoundOverModal, 500);
+                }
+            } else {
+                score -= 1;
+                updateScoreboard();
+                roundAttempts[leftValue] = true;
+                tempLeft.classList.add('incorrect');
+                tempRight.classList.add('incorrect');
+                
+                setTimeout(() => {
+                    tempLeft.classList.remove('incorrect', 'selected');
+                    tempRight.classList.remove('incorrect', 'selected');
+                }, 500);
+            }
         }
         
         function showRoundOverModal() {
-             // Show modal with feedback and round summary
+            totalScore += score;
+            const feedbackMessage = document.getElementById('feedback-message');
+            const successInfo = document.getElementById('success-info');
+            
+            feedbackMessage.textContent = `Round ${currentRound} Complete!`;
+            
+            let infoHTML = `<p class="font-bold text-lg mb-2">Correct Pairings:</p><ul class="list-disc pl-5 space-y-1">`;
+            roundData.forEach(pair => {
+                infoHTML += `<li><span class="font-semibold">${pair.left}</span> &rarr; <span class="font-semibold">${pair.right}</span></li>`;
+            });
+            infoHTML += '</ul>';
+            successInfo.innerHTML = infoHTML;
+            
+            showModal(roundOverModal);
         }
 
         function hideRoundOverModal() {
-            roundOverModal.classList.add('hidden');
-            currentRound++;
-            startRound();
+            hideModal(roundOverModal, () => {
+                currentRound++;
+                score = 0;
+                startRound();
+            });
         }
 
         function updateScoreboard() {
@@ -465,28 +602,31 @@
             else if (percentage >= 60) finalFeedback.textContent = "Great job! You know your stuff.";
             else finalFeedback.textContent = "Good effort! Keep studying and you'll be an expert.";
 
-            gameOverModal.classList.remove('hidden');
+            showModal(gameOverModal);
         }
         
         function hideGameOverAndReset() {
-             gameOverModal.classList.add('hidden');
-             initGame(currentGameMode);
+             hideModal(gameOverModal, () => initGame(currentGameMode));
         }
         
         function hideGameOverAndMenu() {
-             gameOverModal.classList.add('hidden');
-             showScreen('main');
+            hideModal(gameOverModal, () => showScreen('main'));
         }
 
         // --- EVENT LISTENERS ---
-        document.getElementById('play-bereiche-btn').addEventListener('click', () => { initGame('bereiche'); showScreen('game'); });
-        document.getElementById('play-grosslage-btn').addEventListener('click', () => { initGame('grosslage'); showScreen('game'); });
-        document.getElementById('play-villages-btn').addEventListener('click', () => { initGame('villages'); showScreen('game'); });
-        document.getElementById('play-moguls-btn').addEventListener('click', () => { initGame('moguls'); showScreen('game'); });
+        document.getElementById('play-bereiche-btn').addEventListener('click', () => initGame('bereiche'));
+        document.getElementById('play-grosslage-btn').addEventListener('click', () => initGame('grosslage'));
+        document.getElementById('play-villages-btn').addEventListener('click', () => initGame('villages'));
+        document.getElementById('play-moguls-btn').addEventListener('click', () => initGame('moguls'));
         
-        document.getElementById('view-database-btn').addEventListener('click', () => alert("Database view coming soon!"));
-        document.getElementById('rules-btn').addEventListener('click', () => rulesModal.classList.remove('hidden'));
-        document.getElementById('close-rules-btn').addEventListener('click', () => rulesModal.classList.add('hidden'));
+        document.getElementById('view-database-btn').addEventListener('click', () => {
+            populateDatabase();
+            showScreen('databaseView');
+        });
+        document.getElementById('back-to-menu-db-btn').addEventListener('click', () => showScreen('main'));
+        
+        document.getElementById('rules-btn').addEventListener('click', () => showModal(rulesModal));
+        document.getElementById('close-rules-btn').addEventListener('click', () => hideModal(rulesModal));
         
         document.getElementById('back-to-menu-game-btn').addEventListener('click', () => showScreen('main'));
         document.getElementById('next-round-btn').addEventListener('click', hideRoundOverModal);
@@ -498,4 +638,3 @@
     </script>
 </body>
 </html>
-
