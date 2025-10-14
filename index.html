@@ -105,7 +105,7 @@
                 <button id="play-bereiche-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Bereiche Study</button>
                 <button id="play-grosslage-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Grosslagen Challenge</button>
                 <button id="play-villages-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Major Villages Challenge</button>
-                <button id="play-moguls-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Moguls Challenge</button>
+                <button id="play-moguls-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Moguls Challenge (Expert)</button>
             </div>
             
             <div class="flex justify-center space-x-4">
@@ -138,7 +138,7 @@
         </div>
     </div>
 
-    <div id="game-container" class="w-full max-w-4xl mx-auto hidden relative pb-16">
+    <div id="game-container" class="w-full max-w-6xl mx-auto hidden relative pb-16">
         <button id="back-to-menu-game-btn" class="absolute bottom-0 right-0 mb-2 mr-2 md:mb-0 md:mr-0 btn-secondary font-bold py-2 px-4 rounded-lg transition-colors z-10 text-xs md:text-base">Main Menu</button>
         <div class="text-center mb-6">
             <h1 id="game-title" class="text-4xl md:text-5xl font-bold theme-text"></h1>
@@ -156,12 +156,16 @@
         </div>
 
         <div class="game-card rounded-lg p-4 md:p-8">
-            <div class="grid grid-cols-2 gap-3 md:gap-8">
+            <div id="game-grid" class="grid gap-3 md:gap-8">
                 <div>
                     <h3 id="left-column-title" class="text-xl md:text-2xl font-bold text-center mb-4"></h3>
                     <div id="left-column-container" class="flex flex-col space-y-3"></div>
                 </div>
                 <div>
+                    <h3 id="middle-column-title" class="text-xl md:text-2xl font-bold text-center mb-4"></h3>
+                    <div id="middle-column-container" class="flex flex-col space-y-3"></div>
+                </div>
+                <div id="right-column-wrapper" class="hidden">
                     <h3 id="right-column-title" class="text-xl md:text-2xl font-bold text-center mb-4"></h3>
                     <div id="right-column-container" class="flex flex-col space-y-3"></div>
                 </div>
@@ -173,7 +177,7 @@
         <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full text-center modal-content">
              <h2 id="feedback-message" class="text-4xl font-bold mb-4 theme-text"></h2>
              <div class="mb-6 text-left max-h-60 overflow-y-auto" id="success-info">
-                 </div>
+             </div>
             <button id="next-round-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors">Continue</button>
         </div>
     </div>
@@ -195,8 +199,8 @@
                      <p class="text-sm">Match the <span class="font-semibold">Major Village</span> to its correct <span class="font-semibold">Bereiche</span> (District).</p>
                  </div>
                  <div>
-                     <h3 class="font-bold">Moguls Challenge:</h3>
-                     <p class="text-sm">Match the <span class="font-semibold">Mogul</span> (Top Producer) to their home <span class="font-semibold">Village</span>.</p>
+                     <h3 class="font-bold">Moguls Challenge (Expert):</h3>
+                     <p class="text-sm">Match the <span class="font-semibold">Mogul</span> (Producer) to their home <span class="font-semibold">Village</span> and the correct <span class="font-semibold">Anbaugebiet</span> (Region).</p>
                  </div>
                  <hr>
                  <p class="text-sm">All modes consist of 10 rounds, with 5 matches per round. You get +2 points for a correct match on your first try, +1 for a correct match on subsequent tries, and -1 for an incorrect guess.</p>
@@ -227,13 +231,13 @@
                     "bereiche": ["Walporzheim-Ahrtal"],
                     "grosslagen": { "Walporzheim-Ahrtal": ["Klosterberg"] },
                     "major_villages": [{ "bereiche": "Walporzheim-Ahrtal", "villages": ["Altenahr", "Mayschoss", "Rech", "Dernau", "Marienthal", "Walporzheim", "Ahrweiler", "Bad-Neuenahr", "Heppingen", "Heimersheim"] }],
-                    "mogul": [{ "name": "Meyer-Näkel", "village": "Dernau" }, { "name": "Kreuzberg", "village": "Dernau" }, { "name": "Nelles", "village": "Bad Neuenahr" }, { "name": "Jean Stodden", "village": "Rech" }, { "name": "Weingut Deutzerhof - Cossmann-Hehle", "village": "Mayschoss" }, { "name": "J.J. Adeneuer", "village": "Ahrweiler" }]
+                    "mogul": [{ "name": "Meyer-Näkel", "village": "Dernau" }, { "name": "Kreuzberg", "village": "Dernau" }, { "name": "Nelles", "village": "Bad-Neuenahr" }, { "name": "Jean Stodden", "village": "Rech" }, { "name": "Weingut Deutzerhof - Cossmann-Hehle", "village": "Mayschoss" }, { "name": "J.J. Adeneuer", "village": "Ahrweiler" }]
                 },
                 {
                     "anbaugebiet": "Baden",
                     "bereiche": ["Badische-Bergstrasse", "Kraichgau", "Ortenau", "Breisgau", "Kaiserstuhl", "Markgräflerland", "Bodensee", "Tauberfranken", "Tuniberg"],
                     "grosslagen": { "Badische Bergstrasse": ["Rittersberg", "Mannaberg"], "Kraichgau": ["Stiftsberg", "Hohenberg", "Mannaberg"], "Ortenau": ["Schloss Rodeck", "Fürsteneck"], "Breisgau": ["Burg Lichteneck", "Burg Zähringen", "Schutterlindenberg"], "Kaiserstuhl": ["Vulkanfelsen"], "Markgräflerland": ["Lorettoberg", "Burg Neuenfels", "Vogtei Rötteln"], "Bodensee": ["Sonnenufer"], "Tauberfranken": ["Tauberklinge"], "Tuniberg": ["Attilafelsen"] },
-                    "major_villages": [{ "bereiche": "Badische-Bergstrasse", "villages": ["Heidelberg", "Leimen"] }, { "bereiche": "Kraichgau", "villages": ["Östringen", "Sulzfeld", "Tiefenbach"] }, { "bereiche": "Ortenau", "villages": ["Baden-Baden", "Varnhalt", "Neuweier", "Sasbachwalden", "Durbach", "Zell-Weierbach"] }, { "bereiche": "Breisgau", "villages": ["Freiburg", "Malterdingen", "Emmendingen", "Lahr", "Hecklingen"] }, { "bereiche": "Kaiserstuhl", "villages": ["Achkarren", "Burkheim", "Oberrotweil", "Ihringen", "Sasbach"] }, { "bereiche": "Markgräflerland", "villages": ["Schliengen", "Istein", "Mauchen", "Auggen"] }, { "bereiche": "Bodensee", "villages": ["Meersburg"] }],
+                    "major_villages": [{ "bereiche": "Badische-Bergstrasse", "villages": ["Heidelberg", "Leimen"] }, { "bereiche": "Kraichgau", "villages": ["Östringen", "Sulzfeld", "Tiefenbach"] }, { "bereiche": "Ortenau", "villages": ["Baden-Baden", "Varnhalt", "Neuweier", "Sasbachwalden", "Durbach", "Zell-Weierbach"] }, { "bereiche": "Breisgau", "villages": ["Freiburg", "Malterdingen", "Emmendingen", "Lahr", "Hecklingen", "Endingen", "Münchweier"] }, { "bereiche": "Kaiserstuhl", "villages": ["Achkarren", "Burkheim", "Oberrotweil", "Ihringen", "Sasbach"] }, { "bereiche": "Markgräflerland", "villages": ["Schliengen", "Istein", "Mauchen", "Auggen"] }, { "bereiche": "Bodensee", "villages": ["Meersburg"] }],
                     "mogul": [{ "name": "Bernhard Huber", "village": "Malterdingen" }, { "name": "Andreas Laible", "village": "Durbach" }, { "name": "R. and C. Schneider", "village": "Endingen" }, { "name": "Salwey", "village": "Oberrotweil" }, { "name": "Dr. Heger", "village": "Ihringen" }, { "name": "Enderle & Moll", "village": "Münchweier" }]
                 },
                 {
@@ -325,9 +329,10 @@
         let score = 0;
         let correctMatches = 0;
         let selectedLeftItem = null;
-        let selectedRightItem = null;
+        let selectedMiddleItem = null;
+        let selectedRightItem = null; // New for 3-column layout
         let roundAttempts = {}; 
-        let currentGameMode = ''; // 'bereiche', 'grosslage', 'villages', 'moguls'
+        let currentGameMode = '';
 
         // --- DOM ELEMENTS ---
         const mainMenuContainer = document.getElementById('main-menu-container');
@@ -336,9 +341,15 @@
         
         const roundInfo = document.getElementById('round-info');
         const scoreInfo = document.getElementById('score-info');
+        const gameGrid = document.getElementById('game-grid');
+
         const leftColumnContainer = document.getElementById('left-column-container');
+        const middleColumnContainer = document.getElementById('middle-column-container');
+        const rightColumnWrapper = document.getElementById('right-column-wrapper');
         const rightColumnContainer = document.getElementById('right-column-container');
+
         const leftColumnTitle = document.getElementById('left-column-title');
+        const middleColumnTitle = document.getElementById('middle-column-title');
         const rightColumnTitle = document.getElementById('right-column-title');
 
         const roundOverModal = document.getElementById('round-over-modal');
@@ -373,23 +384,15 @@
 
         function populateDatabase() {
             const tableBody = document.getElementById('database-table-body');
-            tableBody.innerHTML = ''; // Clear existing data
+            tableBody.innerHTML = ''; 
 
             gameData.german_wine_regions.forEach(region => {
                 const row = document.createElement('tr');
                 row.className = 'border-b theme-border-light';
-
                 const formatArray = (arr) => arr ? arr.join('<br>') : 'N/A';
                 const formatObject = (obj) => Object.entries(obj).map(([key, value]) => `<b>${key}:</b><br>${value.join('<br>') || 'N/A'}`).join('<hr class="my-2">');
                 const formatNestedArray = (arr, key1, key2) => arr.map(item => `<b>${item[key1]}:</b><br>${Array.isArray(item[key2]) ? item[key2].join('<br>') : item[key2]}`).join('<hr class="my-2">');
-
-                row.innerHTML = `
-                    <td class="p-4 align-top">${region.anbaugebiet}</td>
-                    <td class="p-4 align-top">${formatArray(region.bereiche)}</td>
-                    <td class="p-4 align-top">${formatObject(region.grosslagen)}</td>
-                    <td class="p-4 align-top">${formatNestedArray(region.major_villages, 'bereiche', 'villages')}</td>
-                    <td class="p-4 align-top">${formatNestedArray(region.mogul, 'name', 'village')}</td>
-                `;
+                row.innerHTML = `<td class="p-4 align-top">${region.anbaugebiet}</td><td class="p-4 align-top">${formatArray(region.bereiche)}</td><td class="p-4 align-top">${formatObject(region.grosslagen)}</td><td class="p-4 align-top">${formatNestedArray(region.major_villages, 'bereiche', 'villages')}</td><td class="p-4 align-top">${formatNestedArray(region.mogul, 'name', 'village')}</td>`;
                 tableBody.appendChild(row);
             });
         }
@@ -416,7 +419,7 @@
             if (mode === 'bereiche') return "Bereiche Study";
             if (mode === 'grosslage') return "Grosslagen Challenge";
             if (mode === 'villages') return "Major Villages Challenge";
-            if (mode === 'moguls') return "Moguls Challenge";
+            if (mode === 'moguls') return "Moguls Challenge (Expert)";
             return "German Wine Challenge";
         }
         
@@ -429,11 +432,21 @@
             roundData = [];
             correctMatches = 0;
             selectedLeftItem = null;
+            selectedMiddleItem = null;
             selectedRightItem = null;
             roundAttempts = {};
+
+            if (currentGameMode === 'moguls') {
+                gameGrid.classList.remove('grid-cols-2');
+                gameGrid.classList.add('grid-cols-3');
+                rightColumnWrapper.classList.remove('hidden');
+            } else {
+                gameGrid.classList.remove('grid-cols-3');
+                gameGrid.classList.add('grid-cols-2');
+                rightColumnWrapper.classList.add('hidden');
+            }
             
             generateRoundData();
-            
             updateScoreboard();
             renderButtons();
         }
@@ -443,11 +456,9 @@
             const regions = gameData.german_wine_regions;
 
             if (currentGameMode === 'bereiche') {
-                regions.forEach(region => {
-                    region.bereiche.forEach(bereich => allPairs.push({ left: bereich, right: region.anbaugebiet }));
-                });
+                regions.forEach(region => region.bereiche.forEach(bereich => allPairs.push({ left: bereich, right: region.anbaugebiet })));
                 leftColumnTitle.textContent = 'Bereiche';
-                rightColumnTitle.textContent = 'Anbaugebiet';
+                middleColumnTitle.textContent = 'Anbaugebiet';
             } else if (currentGameMode === 'grosslage') {
                 regions.forEach(region => {
                     for (const bereich in region.grosslagen) {
@@ -455,21 +466,16 @@
                     }
                 });
                 leftColumnTitle.textContent = 'Grosslage';
-                rightColumnTitle.textContent = 'Bereiche';
+                middleColumnTitle.textContent = 'Bereiche';
             } else if (currentGameMode === 'villages') {
-                regions.forEach(region => {
-                    region.major_villages.forEach(item => {
-                        item.villages.forEach(village => allPairs.push({ left: village, right: item.bereiche }));
-                    });
-                });
+                regions.forEach(region => region.major_villages.forEach(item => item.villages.forEach(village => allPairs.push({ left: village, right: item.bereiche }))));
                 leftColumnTitle.textContent = 'Major Village';
-                rightColumnTitle.textContent = 'Bereiche';
+                middleColumnTitle.textContent = 'Bereiche';
             } else if (currentGameMode === 'moguls') {
-                regions.forEach(region => {
-                    region.mogul.forEach(producer => allPairs.push({ left: producer.name, right: producer.village }));
-                });
+                regions.forEach(region => region.mogul.forEach(producer => allPairs.push({ left: producer.name, middle: producer.village, right: region.anbaugebiet })));
                 leftColumnTitle.textContent = 'Mogul';
-                rightColumnTitle.textContent = 'Village';
+                middleColumnTitle.textContent = 'Village';
+                rightColumnTitle.textContent = 'Anbaugebiet';
             }
 
             shuffleArray(allPairs);
@@ -478,10 +484,8 @@
         
         function renderButtons() {
             leftColumnContainer.innerHTML = '';
+            middleColumnContainer.innerHTML = '';
             rightColumnContainer.innerHTML = '';
-
-            const leftItems = shuffleArray(roundData.map(item => item.left));
-            const rightItems = shuffleArray(roundData.map(item => item.right));
 
             const createButton = (item, type, container) => {
                 const button = document.createElement('button');
@@ -492,8 +496,18 @@
                 container.appendChild(button);
             };
 
+            const leftItems = shuffleArray(roundData.map(item => item.left));
             leftItems.forEach(item => createButton(item, 'left', leftColumnContainer));
-            rightItems.forEach(item => createButton(item, 'right', rightColumnContainer));
+
+            if (currentGameMode === 'moguls') {
+                const middleItems = shuffleArray(roundData.map(item => item.middle));
+                const rightItems = shuffleArray(roundData.map(item => item.right));
+                middleItems.forEach(item => createButton(item, 'middle', middleColumnContainer));
+                rightItems.forEach(item => createButton(item, 'right', rightColumnContainer));
+            } else {
+                const rightItems = shuffleArray(roundData.map(item => item.right));
+                rightItems.forEach(item => createButton(item, 'middle', middleColumnContainer));
+            }
         }
         
         function handleSelection(type, button) {
@@ -502,40 +516,52 @@
              if (type === 'left') {
                  if (selectedLeftItem) selectedLeftItem.classList.remove('selected');
                  selectedLeftItem = button;
-                 button.classList.add('selected');
+             } else if (type === 'middle') {
+                 if (selectedMiddleItem) selectedMiddleItem.classList.remove('selected');
+                 selectedMiddleItem = button;
              } else { // right
                  if (selectedRightItem) selectedRightItem.classList.remove('selected');
                  selectedRightItem = button;
-                 button.classList.add('selected');
              }
+             button.classList.add('selected');
              
-             if (selectedLeftItem && selectedRightItem) {
+             const readyToCheck = currentGameMode === 'moguls' 
+                ? selectedLeftItem && selectedMiddleItem && selectedRightItem
+                : selectedLeftItem && selectedMiddleItem;
+
+             if (readyToCheck) {
                 checkMatch();
              }
         }
 
         function checkMatch() {
             const leftValue = selectedLeftItem.dataset.value;
-            const rightValue = selectedRightItem.dataset.value;
-            const correctPair = roundData.find(item => item.left === leftValue);
-            const isCorrect = correctPair && correctPair.right === rightValue;
+            const middleValue = selectedMiddleItem.dataset.value;
+            const correctData = roundData.find(item => item.left === leftValue);
+            let isCorrect = false;
+
+            const selectedItems = [selectedLeftItem, selectedMiddleItem];
+            if(currentGameMode === 'moguls') {
+                const rightValue = selectedRightItem.dataset.value;
+                isCorrect = correctData && correctData.middle === middleValue && correctData.right === rightValue;
+                selectedItems.push(selectedRightItem);
+            } else {
+                isCorrect = correctData && correctData.right === middleValue;
+            }
             
-            const tempLeft = selectedLeftItem;
-            const tempRight = selectedRightItem;
             selectedLeftItem = null;
+            selectedMiddleItem = null;
             selectedRightItem = null;
 
             if (isCorrect) {
-                tempLeft.classList.remove('selected');
-                tempRight.classList.remove('selected');
-                tempLeft.classList.add('correct');
-                tempRight.classList.add('correct');
-                tempLeft.disabled = true;
-                tempRight.disabled = true;
+                selectedItems.forEach(item => {
+                    item.classList.remove('selected');
+                    item.classList.add('correct');
+                    item.disabled = true;
+                });
 
                 score += roundAttempts[leftValue] ? 1 : 2;
                 roundAttempts[leftValue] = true;
-
                 correctMatches++;
                 updateScoreboard();
 
@@ -546,12 +572,10 @@
                 score -= 1;
                 updateScoreboard();
                 roundAttempts[leftValue] = true;
-                tempLeft.classList.add('incorrect');
-                tempRight.classList.add('incorrect');
+                selectedItems.forEach(item => item.classList.add('incorrect'));
                 
                 setTimeout(() => {
-                    tempLeft.classList.remove('incorrect', 'selected');
-                    tempRight.classList.remove('incorrect', 'selected');
+                    selectedItems.forEach(item => item.classList.remove('incorrect', 'selected'));
                 }, 500);
             }
         }
@@ -565,7 +589,11 @@
             
             let infoHTML = `<p class="font-bold text-lg mb-2">Correct Pairings:</p><ul class="list-disc pl-5 space-y-1">`;
             roundData.forEach(pair => {
-                infoHTML += `<li><span class="font-semibold">${pair.left}</span> &rarr; <span class="font-semibold">${pair.right}</span></li>`;
+                if (currentGameMode === 'moguls') {
+                    infoHTML += `<li><span class="font-semibold">${pair.left}</span> &rarr; <span class="font-semibold">${pair.middle}</span> &rarr; <span class="font-semibold">${pair.right}</span></li>`;
+                } else {
+                    infoHTML += `<li><span class="font-semibold">${pair.left}</span> &rarr; <span class="font-semibold">${pair.right}</span></li>`;
+                }
             });
             infoHTML += '</ul>';
             successInfo.innerHTML = infoHTML;
