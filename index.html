@@ -99,7 +99,7 @@
             
             <div class="space-y-4 mb-6">
                 <button id="play-bereiche-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Bereiche Study</button>
-                <button id="play-grosslage-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Grosslage Challenge</button>
+                <button id="play-grosslage-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Grosslagen Challenge</button>
                 <button id="play-villages-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Major Villages Challenge</button>
                 <button id="play-moguls-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Moguls Challenge</button>
             </div>
@@ -188,7 +188,7 @@
                     <p class="text-sm">Match the <span class="font-semibold">Bereiche</span> (District) to its correct <span class="font-semibold">Anbaugebiet</span> (Region).</p>
                 </div>
                 <div>
-                    <h3 class="font-bold">Grosslage Challenge:</h3>
+                    <h3 class="font-bold">Grosslagen Challenge:</h3>
                     <p class="text-sm">Match the <span class="font-semibold">Grosslage</span> (Collective Vineyard Site) to its correct <span class="font-semibold">Bereiche</span> (District).</p>
                 </div>
                 <div>
@@ -321,36 +321,27 @@
         const TOTAL_ROUNDS = 10;
         
         // --- GAME STATE ---
-        let score = 0;
         let totalScore = 0;
         let currentRound = 1;
         let roundData = [];
-        let firstTrySuccesses = 0;
+        let score = 0;
         let correctMatches = 0;
         let selectedLeftItem = null;
-        let selectedMiddleItem = null;
         let selectedRightItem = null;
         let roundAttempts = {}; 
-        let currentGameMode = ''; // 'beginner', 'advanced', 'insanity', 'region'
-        let currentRegion = ''; // For region-specific mode
+        let currentGameMode = ''; // 'bereiche', 'grosslage', 'villages', 'moguls'
 
         // --- DOM ELEMENTS ---
         const mainMenuContainer = document.getElementById('main-menu-container');
-        const regionSelectionContainer = document.getElementById('region-selection-container');
         const gameContainer = document.getElementById('game-container');
         const databaseContainer = document.getElementById('database-container');
         
         const roundInfo = document.getElementById('round-info');
         const scoreInfo = document.getElementById('score-info');
-        
         const leftColumnContainer = document.getElementById('left-column-container');
-        const middleColumnContainer = document.getElementById('middle-column-container');
         const rightColumnContainer = document.getElementById('right-column-container');
-        
         const leftColumnTitle = document.getElementById('left-column-title');
-        const middleColumnTitle = document.getElementById('middle-column-title');
         const rightColumnTitle = document.getElementById('right-column-title');
-        const rightColumn = document.getElementById('right-column');
 
         const roundOverModal = document.getElementById('round-over-modal');
         const rulesModal = document.getElementById('rules-modal');
@@ -359,16 +350,14 @@
         // --- FUNCTIONS ---
 
         function showScreen(screen) {
-            [mainMenuContainer, regionSelectionContainer, gameContainer, databaseContainer].forEach(el => el.classList.add('hidden'));
+            [mainMenuContainer, gameContainer, databaseContainer].forEach(el => el.classList.add('hidden'));
             if (screen === 'game') gameContainer.classList.remove('hidden');
-            else if (screen === 'regionSelection') regionSelectionContainer.classList.remove('hidden');
             else if (screen === 'databaseView') databaseContainer.classList.remove('hidden');
             else mainMenuContainer.classList.remove('hidden');
         }
-        
+
         function populateDatabase() {
             // This function needs to be created to show a browsable database of all items.
-            // For simplicity in this example, it's a placeholder.
             alert("Database view is not yet implemented in this version.");
         }
 
@@ -380,21 +369,20 @@
             return array;
         }
 
-        function initGame(mode, region = '') {
+        function initGame(mode) {
             currentGameMode = mode;
-            currentRegion = region;
             score = 0;
             totalScore = 0;
             currentRound = 1;
-            document.getElementById('game-title').textContent = getGameTitle(mode, region);
+            document.getElementById('game-title').textContent = getGameTitle(mode);
             startRound();
         }
 
-        function getGameTitle(mode, region) {
-            if (region) return `${region} Challenge`;
-            if (mode === 'beginner') return "Beginner Mode";
-            if (mode === 'advanced') return "Advanced Mode";
-            if (mode === 'insanity') return "INSANITY MODE";
+        function getGameTitle(mode) {
+            if (mode === 'bereiche') return "Bereiche Study";
+            if (mode === 'grosslage') return "Grosslagen Challenge";
+            if (mode === 'villages') return "Major Villages Challenge";
+            if (mode === 'moguls') return "Moguls Challenge";
             return "German Wine Challenge";
         }
         
@@ -407,11 +395,9 @@
             roundData = [];
             correctMatches = 0;
             selectedLeftItem = null;
-            selectedMiddleItem = null;
             selectedRightItem = null;
             roundAttempts = {};
             
-            // Generate round data based on game mode
             generateRoundData();
             
             updateScoreboard();
@@ -419,35 +405,37 @@
         }
         
         function generateRoundData() {
-            // Logic to select 5 unique items for the round based on currentGameMode
-            // This is a complex part that needs careful implementation to avoid redundancies
-            // Placeholder for now
-            const allData = gameData.german_wine_regions.flatMap(anbau => 
-                anbau.major_villages.flatMap(mv => 
-                    mv.villages.map(village => ({
-                        anbaugebiet: anbau.anbaugebiet,
-                        bereiche: mv.bereiche,
-                        village: village
-                    }))
-                )
-            );
-            roundData = shuffleArray(allData).slice(0, 5); // simplified for this example
+            // Complex logic to generate 5 unique pairs for the current mode
         }
         
         function renderButtons() {
-            // Logic to render buttons in 2 or 3 columns based on mode
+            // Renders buttons based on roundData and currentGameMode
         }
         
         function handleSelection(type, button) {
-             // Logic to handle user selections and check matches
+             if (button.classList.contains('correct')) return;
+
+             if (type === 'left') {
+                 if (selectedLeftItem) selectedLeftItem.classList.remove('selected');
+                 selectedLeftItem = button;
+                 button.classList.add('selected');
+             } else { // right
+                 if (selectedRightItem) selectedRightItem.classList.remove('selected');
+                 selectedRightItem = button;
+                 button.classList.add('selected');
+             }
+             
+             if (selectedLeftItem && selectedRightItem) {
+                checkMatch();
+             }
         }
 
         function checkMatch() {
-            // Logic to check if selected items are a correct match
+            // Complex logic to check match based on currentGameMode
         }
         
         function showRoundOverModal() {
-             // Logic to show modal with feedback and round summary
+             // Show modal with feedback and round summary
         }
 
         function hideRoundOverModal() {
@@ -482,7 +470,7 @@
         
         function hideGameOverAndReset() {
              gameOverModal.classList.add('hidden');
-             initGame(currentGameMode, currentRegion);
+             initGame(currentGameMode);
         }
         
         function hideGameOverAndMenu() {
@@ -490,40 +478,24 @@
              showScreen('main');
         }
 
-
         // --- EVENT LISTENERS ---
-        document.getElementById('play-beginner-game-btn').addEventListener('click', () => {
-             showScreen('game');
-             initGame('beginner');
-        });
-        document.getElementById('play-advanced-game-btn').addEventListener('click', () => {
-             showScreen('game');
-             initGame('advanced');
-        });
-        document.getElementById('play-insanity-game-btn').addEventListener('click', () => {
-             showScreen('game');
-             initGame('insanity');
-        });
-
-        document.getElementById('choose-region-btn').addEventListener('click', () => showScreen('regionSelection'));
-        document.getElementById('view-database-btn').addEventListener('click', () => {
-            alert("Database view is not implemented yet."); // Placeholder
-            // populateDatabase();
-            // showScreen('databaseView');
-        });
-
+        document.getElementById('play-bereiche-btn').addEventListener('click', () => { initGame('bereiche'); showScreen('game'); });
+        document.getElementById('play-grosslage-btn').addEventListener('click', () => { initGame('grosslage'); showScreen('game'); });
+        document.getElementById('play-villages-btn').addEventListener('click', () => { initGame('villages'); showScreen('game'); });
+        document.getElementById('play-moguls-btn').addEventListener('click', () => { initGame('moguls'); showScreen('game'); });
+        
+        document.getElementById('view-database-btn').addEventListener('click', () => alert("Database view coming soon!"));
         document.getElementById('rules-btn').addEventListener('click', () => rulesModal.classList.remove('hidden'));
         document.getElementById('close-rules-btn').addEventListener('click', () => rulesModal.classList.add('hidden'));
         
-        document.getElementById('back-to-main-menu-region-select-btn').addEventListener('click', () => showScreen('main'));
         document.getElementById('back-to-menu-game-btn').addEventListener('click', () => showScreen('main'));
         document.getElementById('next-round-btn').addEventListener('click', hideRoundOverModal);
         document.getElementById('play-again-btn').addEventListener('click', hideGameOverAndReset);
         document.getElementById('game-over-main-menu-btn').addEventListener('click', hideGameOverAndMenu);
         
         // --- INITIALIZATION ---
-        // createMenuButtons(); // This will populate the region selection menu
         showScreen('main');
     </script>
 </body>
 </html>
+
