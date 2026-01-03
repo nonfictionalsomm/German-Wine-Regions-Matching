@@ -103,8 +103,9 @@
             
             <div class="space-y-4 mb-6">
                 <button id="play-bereiche-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Bereiche Study</button>
-                <button id="play-grosslage-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Grosslagen Challenge</button>
                 <button id="play-villages-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Major Villages Challenge</button>
+                <button id="play-vineyards-btn" class="w-full btn-secondary font-bold py-3 px-4 rounded-lg transition-colors text-lg border-2 border-yellow-600">Intermediate: Top 100 Vineyards</button>
+                <button id="play-grosslage-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Grosslagen Challenge</button>
                 <button id="play-moguls-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg transition-colors text-lg">Moguls Challenge (Expert)</button>
             </div>
             
@@ -140,8 +141,9 @@
 
     <div id="game-container" class="w-full max-w-6xl mx-auto hidden relative pb-16">
         <button id="back-to-menu-game-btn" class="absolute bottom-0 right-0 mb-2 mr-2 md:mb-0 md:mr-0 btn-secondary font-bold py-2 px-4 rounded-lg transition-colors z-10 text-xs md:text-base">Main Menu</button>
-        <div class="text-center mb-6">
+        <div class="text-center mb-2">
             <h1 id="game-title" class="text-4xl md:text-5xl font-bold theme-text"></h1>
+            <p id="game-subtitle" class="text-gray-500 text-sm mt-2 italic hidden"></p>
         </div>
 
         <div class="flex justify-around items-center mb-6 p-4 rounded-lg theme-bg-light game-card">
@@ -185,18 +187,22 @@
     <div id="rules-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
         <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full text-left modal-content">
              <h2 class="text-3xl font-bold mb-4 theme-text">Game Modes & Rules</h2>
-             <div class="space-y-4 text-gray-700">
+             <div class="space-y-4 text-gray-700 h-96 overflow-y-auto">
                  <div>
                      <h3 class="font-bold">Bereiche Study:</h3>
                      <p class="text-sm">Match the <span class="font-semibold">Bereiche</span> (District) to its correct <span class="font-semibold">Anbaugebiet</span> (Region).</p>
                  </div>
                  <div>
-                     <h3 class="font-bold">Grosslagen Challenge:</h3>
-                     <p class="text-sm">Match the <span class="font-semibold">Grosslage</span> (Collective Vineyard Site) to its correct <span class="font-semibold">Bereiche</span> (District).</p>
-                 </div>
-                 <div>
                      <h3 class="font-bold">Major Villages Challenge:</h3>
                      <p class="text-sm">Match the <span class="font-semibold">Major Village</span> to its correct <span class="font-semibold">Bereiche</span> (District).</p>
+                 </div>
+                 <div class="bg-yellow-50 p-2 border border-yellow-200 rounded">
+                     <h3 class="font-bold text-yellow-800">Intermediate: Top 100 Vineyards:</h3>
+                     <p class="text-sm text-yellow-900">Match the <span class="font-semibold">Einzellage</span> (Single Vineyard) to its <span class="font-semibold">Gemeinde</span> (Village). These are the top 100 vineyards to know!</p>
+                 </div>
+                 <div>
+                     <h3 class="font-bold">Grosslagen Challenge:</h3>
+                     <p class="text-sm">Match the <span class="font-semibold">Grosslage</span> (Collective Vineyard Site) to its correct <span class="font-semibold">Bereiche</span> (District).</p>
                  </div>
                  <div>
                      <h3 class="font-bold">Moguls Challenge (Expert):</h3>
@@ -224,6 +230,108 @@
 
     <script>
         // --- DATA ---
+        const top100Vineyards = [
+            {"Anbaugebiete": "Mosel", "Bereiche": "Saar", "Gemeinden": "Wiltingen", "Einzellagen": "Scharzhofberger", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Saar", "Gemeinden": "Saarbug", "Einzellagen": "Rausch", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Ruwertal", "Gemeinden": "Eitelsbach", "Einzellagen": "Karthäuserhofberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Ruwertal", "Gemeinden": "Mertesdorf", "Einzellagen": "Abtsberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Ruwertal", "Gemeinden": "Mertesdorf", "Einzellagen": "Herrenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Ruwertal", "Gemeinden": "Mertesdorf", "Einzellagen": "Bruderberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Trettenheim", "Einzellagen": "Apotheke", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Piesport", "Einzellagen": "Goldtröpfchen", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Piesport", "Einzellagen": "Domherr", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Brauneberg", "Einzellagen": "Juffer", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Brauneberg", "Einzellagen": "Juffer Sonnenuhr", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Berkastel-Kues", "Einzellagen": "Doctor", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Berkastel-Kues", "Einzellagen": "Lay", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Graach an der Mosel", "Einzellagen": "Domprobst", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Graach an der Mosel", "Einzellagen": "Josephshöfer", "Alleinbesitz": "Reichsgraf von Kesselstatt"},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Wehlen", "Einzellagen": "Sonnenuhr", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Zeltingen", "Einzellagen": "Sonnenuhr", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Ürzig", "Einzellagen": "Würzgarten", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Erden", "Einzellagen": "Prälat", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mosel", "Bereiche": "Bernkastel", "Gemeinden": "Erden", "Einzellagen": "Treppchen", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Assmannshausen", "Einzellagen": "Höllenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Rüdesheim", "Einzellagen": "Berg Roseneck", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Rüdesheim", "Einzellagen": "Berg Rottland", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Rüdesheim", "Einzellagen": "Berg Schlossberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Geisenheim", "Einzellagen": "Schloss Johannisberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Johannisberg", "Einzellagen": "Hölle", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Winkel", "Einzellagen": "Schloss Vollrads", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Winkel", "Einzellagen": "Jesuitengarten", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Winkel", "Einzellagen": "Hasensprung", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Hattenheim", "Einzellagen": "Pfaffenberg", "Alleinbesitz": "Schloss Schonborn"},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Hattenheim", "Einzellagen": "Mannberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Hattenheim", "Einzellagen": "Steinberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Hallgarten", "Einzellagen": "Schönhell", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Hallgarten", "Einzellagen": "Jungfer", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Erbach", "Einzellagen": "Marcobrunn", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Kiedrich", "Einzellagen": "Gräfenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Eltville", "Einzellagen": "Sonnenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Hochheim am Main", "Einzellagen": "Hölle", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheingau", "Bereiche": "Johannisberg", "Gemeinden": "Hochheim am Main", "Einzellagen": "Kirchenstück", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheinhessen", "Bereiche": "Nierstein/Rheinterrasse", "Gemeinden": "Nackenheim", "Einzellagen": "Rothenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheinhessen", "Bereiche": "Nierstein/Rheinterrasse", "Gemeinden": "Neirstein", "Einzellagen": "Hipping", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheinhessen", "Bereiche": "Nierstein/Rheinterrasse", "Gemeinden": "Neirstein", "Einzellagen": "Pettenthal", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheinhessen", "Bereiche": "Nierstein/Rheinterrasse", "Gemeinden": "Oppenheim", "Einzellagen": "Schützenhütte", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheinhessen", "Bereiche": "Nierstein/Rheinterrasse", "Gemeinden": "Oppenheim", "Einzellagen": "Sackträger", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheinhessen", "Bereiche": "Wonnegau", "Gemeinden": "Westhofen", "Einzellagen": "Morstein", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheinhessen", "Bereiche": "Wonnegau", "Gemeinden": "Westhofen", "Einzellagen": "Kirchspiel", "Alleinbesitz": null},
+            {"Anbaugebiete": "Rheinhessen", "Bereiche": "Wonnegau", "Gemeinden": "Flörsheim-Dalsheim", "Einzellagen": "Oberer Hubacker", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Kallstadt", "Einzellagen": "Saumagen", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Ungstein", "Einzellagen": "Herrenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Bad Dürkheim", "Einzellagen": "Hochbenn", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Wachenheim", "Einzellagen": "Gerümpel", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Forst", "Einzellagen": "Kirchenstück", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Forst", "Einzellagen": "Freundstück", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Forst", "Einzellagen": "Pechstein", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Forst", "Einzellagen": "Ungeheuer", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Forst", "Einzellagen": "Jesuitengarten", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Deidesheim", "Einzellagen": "Langenmorgen", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Deidesheim", "Einzellagen": "Hohenmorgen", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Deidesheim", "Einzellagen": "Kieselberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Ruppertsberg", "Einzellagen": "Reiterpfad", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Ruppertsberg", "Einzellagen": "Gaisböhl", "Alleinbesitz": "Bürklin-Wolf"},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Mittelhaardt-Deutsche Weinstrasse", "Gemeinden": "Königsbach", "Einzellagen": "Idig", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Südliche-Weinstrasse", "Gemeinden": "Siebeldingen", "Einzellagen": "Im Sonnenschein", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Südliche-Weinstrasse", "Gemeinden": "Birkweiler", "Einzellagen": "Kastanienbusch", "Alleinbesitz": null},
+            {"Anbaugebiete": "Pfalz", "Bereiche": "Südliche-Weinstrasse", "Gemeinden": "Schweigen", "Einzellagen": "Kammerberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Nahe", "Bereiche": "Nahetal", "Gemeinden": "Bad Kreuznach", "Einzellagen": "Kahlenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Nahe", "Bereiche": "Nahetal", "Gemeinden": "Bad Münster", "Einzellagen": "Kapellenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Nahe", "Bereiche": "Nahetal", "Gemeinden": "Monzingen", "Einzellagen": "Auf Der Lay", "Alleinbesitz": null},
+            {"Anbaugebiete": "Nahe", "Bereiche": "Nahetal", "Gemeinden": "Monzingen", "Einzellagen": "Frühlingsplätzchen", "Alleinbesitz": null},
+            {"Anbaugebiete": "Nahe", "Bereiche": "Nahetal", "Gemeinden": "Monzingen", "Einzellagen": "Halenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Nahe", "Bereiche": "Nahetal", "Gemeinden": "Norheim", "Einzellagen": "Kirschheck", "Alleinbesitz": null},
+            {"Anbaugebiete": "Nahe", "Bereiche": "Nahetal", "Gemeinden": "Niederhausen", "Einzellagen": "Hermannshöhle", "Alleinbesitz": null},
+            {"Anbaugebiete": "Nahe", "Bereiche": "Nahetal", "Gemeinden": "Niederhausen", "Einzellagen": "Hermannsberg", "Alleinbesitz": "Gut Hermannsberg"},
+            {"Anbaugebiete": "Nahe", "Bereiche": "Nahetal", "Gemeinden": "Oberhausen", "Einzellagen": "Brücke", "Alleinbesitz": "Dönnhoff"},
+            {"Anbaugebiete": "Nahe", "Bereiche": "Nahetal", "Gemeinden": "Schlossböckelheim", "Einzellagen": "Kupfergrube", "Alleinbesitz": null},
+            {"Anbaugebiete": "Nahe", "Bereiche": "Nahetal", "Gemeinden": "Schlossböckelheim", "Einzellagen": "Felsenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Ahr", "Bereiche": "Walporzheim-Ahrtal", "Gemeinden": "Bad Neuenahr", "Einzellagen": "Schieferlay", "Alleinbesitz": null},
+            {"Anbaugebiete": "Ahr", "Bereiche": "Walporzheim-Ahrtal", "Gemeinden": "Dernau", "Einzellagen": "Hardtberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Ahr", "Bereiche": "Walporzheim-Ahrtal", "Gemeinden": "Walporzheim", "Einzellagen": "Alte lay", "Alleinbesitz": null},
+            {"Anbaugebiete": "Franken", "Bereiche": "Mainviereck", "Gemeinden": "Würzburg", "Einzellagen": "Stein", "Alleinbesitz": null},
+            {"Anbaugebiete": "Franken", "Bereiche": "Mainviereck", "Gemeinden": "Würzburg", "Einzellagen": "Leiste", "Alleinbesitz": null},
+            {"Anbaugebiete": "Franken", "Bereiche": "Maindreieck", "Gemeinden": "Escherndorf", "Einzellagen": "Lump", "Alleinbesitz": null},
+            {"Anbaugebiete": "Franken", "Bereiche": "Steigerwald", "Gemeinden": "Iphofen", "Einzellagen": "Julius Echter Berg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Franken", "Bereiche": "Mainviereck", "Gemeinden": "Bürgstadt", "Einzellagen": "Centgrafenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Mittelrhein", "Bereiche": "Loreley", "Gemeinden": "Bacharach", "Einzellagen": "Im Hahn", "Alleinbesitz": "Toni Jost"},
+            {"Anbaugebiete": "Hessische-Bergstrasse", "Bereiche": "Starkenburg", "Gemeinden": "Heppenheim", "Einzellagen": "Centgericht", "Alleinbesitz": "Domäne Bergstrasse"},
+            {"Anbaugebiete": "Hessische-Bergstrasse", "Bereiche": "Starkenburg", "Gemeinden": "Schönberg", "Einzellagen": "Herrnwingert", "Alleinbesitz": "Domäne Bergstrasse"},
+            {"Anbaugebiete": "Baden", "Bereiche": "Kaiserstuhl", "Gemeinden": "Achkarren", "Einzellagen": "Schlossberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Baden", "Bereiche": "Kaiserstuhl", "Gemeinden": "Ihringen", "Einzellagen": "Winklerberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Baden", "Bereiche": "Kaiserstuhl", "Gemeinden": "Oberrotweil", "Einzellagen": "Eichberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Baden", "Bereiche": "Kaiserstuhl", "Gemeinden": "Oberrotweil", "Einzellagen": "Henkenberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Baden", "Bereiche": "Kaiserstuhl", "Gemeinden": "Oberbergen", "Einzellagen": "Bassgeige", "Alleinbesitz": null},
+            {"Anbaugebiete": "Baden", "Bereiche": "Ortenau", "Gemeinden": "Durbach", "Einzellagen": "Schloss staufenberg klingelberg", "Alleinbesitz": "Markgraf von Baden"},
+            {"Anbaugebiete": "Baden", "Bereiche": "Ortenau", "Gemeinden": "Durbach", "Einzellagen": "Plauelrain", "Alleinbesitz": null},
+            {"Anbaugebiete": "Baden", "Bereiche": "Ortenau", "Gemeinden": "Neuweier", "Einzellagen": "Mauerberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Baden", "Bereiche": "Ortenau", "Gemeinden": "Neuweier", "Einzellagen": "Schlossberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Baden", "Bereiche": "Kraichgau", "Gemeinden": "Eichelberg", "Einzellagen": "Wildeck", "Alleinbesitz": null},
+            {"Anbaugebiete": "Baden", "Bereiche": "Kraichgau", "Gemeinden": "Heidelberg", "Einzellagen": "Schlossberg", "Alleinbesitz": null},
+            {"Anbaugebiete": "Baden", "Bereiche": "Markgräflerland", "Gemeinden": "Schliengen", "Einzellagen": "Sonnenstück", "Alleinbesitz": null}
+        ];
+
         const gameData = {
             "german_wine_regions": [
                 {
@@ -342,6 +450,7 @@
         const roundInfo = document.getElementById('round-info');
         const scoreInfo = document.getElementById('score-info');
         const gameGrid = document.getElementById('game-grid');
+        const gameSubtitle = document.getElementById('game-subtitle');
 
         const leftColumnContainer = document.getElementById('left-column-container');
         const middleColumnContainer = document.getElementById('middle-column-container');
@@ -411,6 +520,15 @@
             totalScore = 0;
             currentRound = 1;
             document.getElementById('game-title').textContent = getGameTitle(mode);
+            
+            // Show subtitle only for the intermediate mode
+            if (mode === 'vineyards') {
+                gameSubtitle.textContent = "These are the top 100 vineyards to know in Germany.";
+                gameSubtitle.classList.remove('hidden');
+            } else {
+                gameSubtitle.classList.add('hidden');
+            }
+
             showScreen('game');
             startRound();
         }
@@ -419,6 +537,7 @@
             if (mode === 'bereiche') return "Bereiche Study";
             if (mode === 'grosslage') return "Grosslagen Challenge";
             if (mode === 'villages') return "Major Villages Challenge";
+            if (mode === 'vineyards') return "Top 100 Vineyards";
             if (mode === 'moguls') return "Moguls Challenge (Expert)";
             return "German Wine Challenge";
         }
@@ -452,7 +571,7 @@
         }
         
         function generateRoundData() {
-            const allPairs = [];
+            let allPairs = [];
             const regions = gameData.german_wine_regions;
 
             if (currentGameMode === 'bereiche') {
@@ -471,6 +590,13 @@
                 regions.forEach(region => region.major_villages.forEach(item => item.villages.forEach(village => allPairs.push({ left: village, right: item.bereiche }))));
                 leftColumnTitle.textContent = 'Major Village';
                 middleColumnTitle.textContent = 'Bereiche';
+            } else if (currentGameMode === 'vineyards') {
+                // Logic for the new mode
+                top100Vineyards.forEach(item => {
+                    allPairs.push({ left: item.Einzellagen, right: item.Gemeinden });
+                });
+                leftColumnTitle.textContent = 'Vineyard (Einzellage)';
+                middleColumnTitle.textContent = 'Village (Gemeinde)';
             } else if (currentGameMode === 'moguls') {
                 regions.forEach(region => region.mogul.forEach(producer => allPairs.push({ left: producer.name, middle: producer.village, right: region.anbaugebiet })));
                 leftColumnTitle.textContent = 'Mogul';
@@ -479,7 +605,21 @@
             }
 
             shuffleArray(allPairs);
-            roundData = allPairs.slice(0, 5);
+            
+            // Logic to select 5 items but ensure no duplicate keys (Left items) in a single round
+            // This prevents issues where 'Sonnenuhr' appears twice (Wehlen vs Zeltingen) in the same round
+            const selectedPairs = [];
+            const seenKeys = new Set();
+            
+            for (const pair of allPairs) {
+                if (!seenKeys.has(pair.left)) {
+                    selectedPairs.push(pair);
+                    seenKeys.add(pair.left);
+                }
+                if (selectedPairs.length === 5) break;
+            }
+            
+            roundData = selectedPairs;
         }
         
         function renderButtons() {
@@ -645,6 +785,7 @@
         document.getElementById('play-bereiche-btn').addEventListener('click', () => initGame('bereiche'));
         document.getElementById('play-grosslage-btn').addEventListener('click', () => initGame('grosslage'));
         document.getElementById('play-villages-btn').addEventListener('click', () => initGame('villages'));
+        document.getElementById('play-vineyards-btn').addEventListener('click', () => initGame('vineyards')); // New listener
         document.getElementById('play-moguls-btn').addEventListener('click', () => initGame('moguls'));
         
         document.getElementById('view-database-btn').addEventListener('click', () => {
