@@ -198,7 +198,7 @@
                  </div>
                  <div class="bg-yellow-50 p-2 border border-yellow-200 rounded">
                      <h3 class="font-bold text-yellow-800">Intermediate: Top 100 Vineyards:</h3>
-                     <p class="text-sm text-yellow-900">Match the <span class="font-semibold">Einzellage</span> (Single Vineyard) to its <span class="font-semibold">Gemeinde</span> (Village). These are the top 100 vineyards to know!</p>
+                     <p class="text-sm text-yellow-900">Match the <span class="font-semibold">Einzellage</span> (Single Vineyard) to its <span class="font-semibold">Gemeinde</span> (Village). The region will be revealed after the round!</p>
                  </div>
                  <div>
                      <h3 class="font-bold">Grosslagen Challenge:</h3>
@@ -591,9 +591,9 @@
                 leftColumnTitle.textContent = 'Major Village';
                 middleColumnTitle.textContent = 'Bereiche';
             } else if (currentGameMode === 'vineyards') {
-                // Logic for the new mode
+                // Logic for the new mode - capturing Region as well
                 top100Vineyards.forEach(item => {
-                    allPairs.push({ left: item.Einzellagen, right: item.Gemeinden });
+                    allPairs.push({ left: item.Einzellagen, right: item.Gemeinden, region: item.Anbaugebiete });
                 });
                 leftColumnTitle.textContent = 'Vineyard (Einzellage)';
                 middleColumnTitle.textContent = 'Village (Gemeinde)';
@@ -607,7 +607,6 @@
             shuffleArray(allPairs);
             
             // Logic to select 5 items but ensure no duplicate keys (Left items) in a single round
-            // This prevents issues where 'Sonnenuhr' appears twice (Wehlen vs Zeltingen) in the same round
             const selectedPairs = [];
             const seenKeys = new Set();
             
@@ -731,6 +730,9 @@
             roundData.forEach(pair => {
                 if (currentGameMode === 'moguls') {
                     infoHTML += `<li><span class="font-semibold">${pair.left}</span> &rarr; <span class="font-semibold">${pair.middle}</span> &rarr; <span class="font-semibold">${pair.right}</span></li>`;
+                } else if (currentGameMode === 'vineyards') {
+                    // Added Logic: Display region in parentheses
+                    infoHTML += `<li><span class="font-semibold">${pair.left}</span> &rarr; <span class="font-semibold">${pair.right}</span> <span class="text-gray-500 text-sm">(${pair.region})</span></li>`;
                 } else {
                     infoHTML += `<li><span class="font-semibold">${pair.left}</span> &rarr; <span class="font-semibold">${pair.right}</span></li>`;
                 }
@@ -785,7 +787,7 @@
         document.getElementById('play-bereiche-btn').addEventListener('click', () => initGame('bereiche'));
         document.getElementById('play-grosslage-btn').addEventListener('click', () => initGame('grosslage'));
         document.getElementById('play-villages-btn').addEventListener('click', () => initGame('villages'));
-        document.getElementById('play-vineyards-btn').addEventListener('click', () => initGame('vineyards')); // New listener
+        document.getElementById('play-vineyards-btn').addEventListener('click', () => initGame('vineyards')); 
         document.getElementById('play-moguls-btn').addEventListener('click', () => initGame('moguls'));
         
         document.getElementById('view-database-btn').addEventListener('click', () => {
