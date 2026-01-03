@@ -198,7 +198,7 @@
                  </div>
                  <div class="bg-yellow-50 p-2 border border-yellow-200 rounded">
                      <h3 class="font-bold text-yellow-800">Intermediate: Top 100 Vineyards:</h3>
-                     <p class="text-sm text-yellow-900">Match the <span class="font-semibold">Einzellage</span> (Single Vineyard) to its <span class="font-semibold">Gemeinde</span> (Village). The region will be revealed after the round!</p>
+                     <p class="text-sm text-yellow-900">Match the <span class="font-semibold">Einzellage</span> (Single Vineyard) to its <span class="font-semibold">Gemeinde</span> (Village). The Bereiche and Region will be revealed after the round!</p>
                  </div>
                  <div>
                      <h3 class="font-bold">Grosslagen Challenge:</h3>
@@ -591,9 +591,14 @@
                 leftColumnTitle.textContent = 'Major Village';
                 middleColumnTitle.textContent = 'Bereiche';
             } else if (currentGameMode === 'vineyards') {
-                // Logic for the new mode - capturing Region as well
+                // Logic for the new mode - capturing Region AND Bereiche
                 top100Vineyards.forEach(item => {
-                    allPairs.push({ left: item.Einzellagen, right: item.Gemeinden, region: item.Anbaugebiete });
+                    allPairs.push({ 
+                        left: item.Einzellagen, 
+                        right: item.Gemeinden, 
+                        region: item.Anbaugebiete, 
+                        bereiche: item.Bereiche 
+                    });
                 });
                 leftColumnTitle.textContent = 'Vineyard (Einzellage)';
                 middleColumnTitle.textContent = 'Village (Gemeinde)';
@@ -731,8 +736,8 @@
                 if (currentGameMode === 'moguls') {
                     infoHTML += `<li><span class="font-semibold">${pair.left}</span> &rarr; <span class="font-semibold">${pair.middle}</span> &rarr; <span class="font-semibold">${pair.right}</span></li>`;
                 } else if (currentGameMode === 'vineyards') {
-                    // Added Logic: Display region in parentheses
-                    infoHTML += `<li><span class="font-semibold">${pair.left}</span> &rarr; <span class="font-semibold">${pair.right}</span> <span class="text-gray-500 text-sm">(${pair.region})</span></li>`;
+                    // Added Logic: Display Bereiche AND Region in parentheses
+                    infoHTML += `<li><span class="font-semibold">${pair.left}</span> &rarr; <span class="font-semibold">${pair.right}</span> <span class="text-gray-500 text-sm">(${pair.bereiche}, ${pair.region})</span></li>`;
                 } else {
                     infoHTML += `<li><span class="font-semibold">${pair.left}</span> &rarr; <span class="font-semibold">${pair.right}</span></li>`;
                 }
